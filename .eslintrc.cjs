@@ -1,18 +1,69 @@
+// eslint-disable-next-line no-undef
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   extends: [
+    'stylelint',
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  overrides: [
+    {
+      files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+      rules: {
+        'simple-import-sort/imports': [
+          'error',
+          {
+            groups: [
+              ['^react', '^[^.@]\\w'],
+              ['^(@|components)'],
+              ['^\\u0000'],
+              ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$', '^\\.\\.(?!/?$)', '^\\.\\./?$'],
+              ['^.+\\.?(css)$', '^.+\\.?(sass)$'],
+            ],
+          },
+        ],
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    project: ['./tsconfig.json'],
+    sourceType: 'module',
+  },
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'eslint-plugin-simple-import-sort',
+    'eslint-plugin-import',
+    'eslint-plugin-react',
+    'simple-import-sort',
+    'prettier',
+  ],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'linebreak-style': ['error', 'unix'],
+    'no-empty': 0,
+    '@typescript-eslint/no-explicit-any': 'error',
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    'react/no-unescaped-entities': 'off',
+    '@typescript-eslint/no-unused-vars': 'error', // or "error"
+    'react/react-in-jsx-scope': 'off',
+    'no-empty-pattern': 'off',
+    'no-case-declarations': 'off',
+    'prettier/prettier': 'error',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
   },
 }
